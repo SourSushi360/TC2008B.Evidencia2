@@ -10,7 +10,7 @@ public class Drone : MonoBehaviour
 
     public Transform[] routeCheckpoints = new Transform[4];
     Vector3 target;
-
+    int patrolCheckpoint = 0;
     public static Drone Instance {
         get;
         private set;
@@ -78,20 +78,21 @@ public class Drone : MonoBehaviour
     }
 
     public IEnumerator Patrol(){
-        int patrolCheckpoint = 0;
-        target = routeCheckpoints[patrolCheckpoint].position;
+        
         move = true;
-        while(patrolCheckpoint < 4){
-            
-            target = routeCheckpoints[patrolCheckpoint].position;
-            while(Vector3.Distance(transform.position, target) != 0){
-                yield return Time.deltaTime;
-            }
-            yield return new WaitForSeconds(1);
-            patrolCheckpoint++;
+        
+        if(patrolCheckpoint < 4){
+        target = routeCheckpoints[patrolCheckpoint].position;
+        while(Vector3.Distance(transform.position, target) != 0){
+            yield return Time.deltaTime;
         }
+        yield return new WaitForSeconds(1);
+        patrolCheckpoint++;
         move = false;
-        takeOff();
+        } else {
+            takeOff();
+            patrolCheckpoint = 0;
+        }
     }
 
     public IEnumerator flyToGate(int gate){
