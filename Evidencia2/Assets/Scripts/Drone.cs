@@ -10,6 +10,20 @@ public class Drone : MonoBehaviour
 
     public Transform[] routeCheckpoints = new Transform[4];
     Vector3 target;
+
+    public static Drone Instance {
+        get;
+        private set;
+    }
+
+    void Awake(){
+        if(Instance != null){
+            Destroy(gameObject);
+        } else {
+            // If not, we pick the space
+            Instance = this;
+        }
+    }
     // Start is called before the first frame update
     void Start()
     {
@@ -27,6 +41,12 @@ public class Drone : MonoBehaviour
         }
         if(Input.GetKeyDown(KeyCode.P)){
             StartCoroutine(Patrol());
+        }
+        if(Input.GetKeyDown(KeyCode.Q)){
+            StartCoroutine(flyToGate(1));
+        }
+        if(Input.GetKeyDown(KeyCode.E)){
+            StartCoroutine(flyToGate(2));
         }
     }
 
@@ -72,5 +92,27 @@ public class Drone : MonoBehaviour
         }
         move = false;
         takeOff();
+    }
+
+    public IEnumerator flyToGate(int gate){
+        move = false;
+        StopCoroutine(Patrol());
+        int area;
+        if(gate == 1){
+            area = 0;
+        } else{
+            area = 3;
+        }
+        target = routeCheckpoints[area].position;
+        move = true;
+        while(Vector3.Distance(transform.position, target) != 0){
+            yield return Time.deltaTime;
+        }
+        move = false;
+        //Check the camera
+    }
+
+    public void eliminateTarget(){
+        Debug.Log("Boom!");
     }
 }
