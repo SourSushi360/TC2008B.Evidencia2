@@ -7,7 +7,10 @@ public class HitBox : MonoBehaviour
     public bool blocked = false;
 
     private void OnTriggerEnter(Collider other) {
-        blocked = true;
+        if(other.CompareTag("Gate") || other.CompareTag("Luke") || other.CompareTag("Han")){
+            blocked = true;
+        }
+        
     }
 
     private void OnTriggerExit(Collider other) {

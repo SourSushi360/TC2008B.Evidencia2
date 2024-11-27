@@ -1,16 +1,19 @@
 using System.Collections;
 using System.Collections.Generic;
+//using System.Numerics;
 using UnityEngine;
 
 public class Drone : MonoBehaviour
 {
     Vector3 startPos;
+    Vector3 startFacing;
     bool move = false;
     public float speed = 5f;
 
     public Transform[] routeCheckpoints = new Transform[4];
     Vector3 target;
-    int patrolCheckpoint = 0;
+    Vector3 targetDirection;
+    public int patrolCheckpoint = 0;
     public static Drone Instance {
         get;
         private set;
@@ -28,6 +31,7 @@ public class Drone : MonoBehaviour
     void Start()
     {
         startPos = transform.position;
+        targetDirection = transform.forward;
     }
 
     // Update is called once per frame
@@ -54,12 +58,18 @@ public class Drone : MonoBehaviour
         float step = speed * Time.deltaTime;
         if(move){
             transform.position = Vector3.MoveTowards(transform.position, target, step);
+            Vector3 newDirection = Vector3.RotateTowards(transform.forward, targetDirection, step, 0.0f);
+            transform.rotation = Quaternion.LookRotation(newDirection);
         }
     }
 
     public void takeOff(){
+        patrolCheckpoint = 0;
         target = startPos;
         target.y = startPos.y + 3;
+        Vector3 targetDir = transform.position;
+        targetDir.x -= 1;
+        targetDirection = transform.position - targetDir;
         move = true;
         StartCoroutine(Stop());
     }
@@ -81,30 +91,41 @@ public class Drone : MonoBehaviour
         
         move = true;
         
-        if(patrolCheckpoint < 4){
-        target = routeCheckpoints[patrolCheckpoint].position;
-        while(Vector3.Distance(transform.position, target) != 0){
-            yield return Time.deltaTime;
+        while(patrolCheckpoint < 4){
+            if(patrolCheckpoint == 0 || patrolCheckpoint == 1){
+                turnToGateA();
+            } else {
+                turnToGateB();
+            }
+            target = routeCheckpoints[patrolCheckpoint].position;
+            while(Vector3.Distance(transform.position, target) != 0){
+                yield return Time.deltaTime;
+            }
+            yield return new WaitForSeconds(1);
+            patrolCheckpoint++;
+            Debug.Log(patrolCheckpoint);
         }
-        yield return new WaitForSeconds(1);
-        patrolCheckpoint++;
-        move = false;
-        } else {
-            takeOff();
-            patrolCheckpoint = 0;
-        }
+        takeOff();
+        patrolCheckpoint = 0;
+        
     }
 
     public IEnumerator flyToGate(int gate){
         move = false;
-        StopCoroutine(Patrol());
+        StopAllCoroutines();
+        if(patrolCheckpoint > 0){
+            patrolCheckpoint--;
+        }
         int area;
         if(gate == 1){
             area = 0;
+            turnToGateA();
         } else{
             area = 3;
+            turnToGateB();
         }
         target = routeCheckpoints[area].position;
+        
         move = true;
         while(Vector3.Distance(transform.position, target) != 0){
             yield return Time.deltaTime;
@@ -115,5 +136,17 @@ public class Drone : MonoBehaviour
 
     public void eliminateTarget(){
         Debug.Log("Boom!");
+    }
+
+    private void turnToGateA(){
+        Vector3 targetDir = transform.position;
+        targetDir.z += 1;
+        targetDirection = transform.position - targetDir;
+    }
+
+    private void turnToGateB(){
+        Vector3 targetDir = transform.position;
+        targetDir.z -= 1;
+        targetDirection = transform.position - targetDir;
     }
 }
