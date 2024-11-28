@@ -8,6 +8,9 @@ public class Guard : MonoBehaviour
     [SerializeField] private UnityEvent _SpawnCharacters;
     [SerializeField] private UnityEvent _OpenGates;
     [SerializeField] private UnityEvent _CloseGates;
+    int activeCharacterCounter = 0;
+    int totalCharacters = 0;
+    int humanCharacters = 0;
     public static Guard Instance {
         get;
         private set;
@@ -29,7 +32,9 @@ public class Guard : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        if(Input.GetKeyDown(KeyCode.O)){
+            StartCoroutine(handleGates());
+        }
     }
 
     void destroyTarget(){
@@ -37,13 +42,26 @@ public class Guard : MonoBehaviour
     }
 
     IEnumerator createCharacters(){
-        int counter = 0;
         while(true){
-            if(counter < 6){
+            if(activeCharacterCounter < 12){
                 _SpawnCharacters.Invoke();  
-                counter++; 
+                activeCharacterCounter+=2; 
             }
             yield return new WaitForSeconds(5);
         }
+    }
+
+    IEnumerator handleGates(){
+        _OpenGates.Invoke();
+        yield return new WaitForSeconds(5);
+        _CloseGates.Invoke();
+    }
+
+    public void updateCounter(int type){
+        activeCharacterCounter --;
+        if (type == 0){
+            humanCharacters ++;
+        }
+        totalCharacters ++;
     }
 }
