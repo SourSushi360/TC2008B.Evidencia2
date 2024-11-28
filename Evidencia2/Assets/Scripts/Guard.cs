@@ -1,9 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class Guard : MonoBehaviour
 {
+    [SerializeField] private UnityEvent _SpawnCharacters;
     public static Guard Instance {
         get;
         private set;
@@ -19,7 +21,7 @@ public class Guard : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        StartCoroutine(createCharacters());
     }
 
     // Update is called once per frame
@@ -30,5 +32,16 @@ public class Guard : MonoBehaviour
 
     void destroyTarget(){
         Drone.Instance.eliminateTarget();
+    }
+
+    IEnumerator createCharacters(){
+        int counter = 0;
+        while(true){
+            if(counter < 6){
+                _SpawnCharacters.Invoke();  
+                counter++; 
+            }
+            yield return new WaitForSeconds(5);
+        }
     }
 }

@@ -18,9 +18,9 @@ public class Spawner : MonoBehaviour
         
     }
 
-    public void spawnCharacter(int character){
-        //int chance = Random.Range(0, 11);
-        if(character > 8){
+    public void spawnCharacter(){
+        int chance = Random.Range(0, 11);
+        if(chance > 8){
             Instantiate(
                     robot,
                     this.transform

@@ -231,7 +231,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   frontHB: {fileID: 364217056728667907}
-  speed: 10
+  speed: 3
 --- !u!54 &5272762925983643411
 Rigidbody:
   m_ObjectHideFlags: 0
