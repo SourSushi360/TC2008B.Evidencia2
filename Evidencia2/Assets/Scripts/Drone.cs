@@ -5,6 +5,7 @@ using UnityEngine;
 
 public class Drone : MonoBehaviour
 {
+    public LaserBeam gun;
     Vector3 startPos;
     Vector3 startFacing;
     bool move = false;
@@ -136,6 +137,7 @@ public class Drone : MonoBehaviour
 
     public void eliminateTarget(){
         Debug.Log("Boom!");
+        gun.Boom();
     }
 
     private void turnToGateA(){

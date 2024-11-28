@@ -35,6 +35,9 @@ public class Guard : MonoBehaviour
         if(Input.GetKeyDown(KeyCode.O)){
             StartCoroutine(handleGates());
         }
+        if(Input.GetKeyDown(KeyCode.B)){
+            destroyTarget();
+        }
     }
 
     void destroyTarget(){
