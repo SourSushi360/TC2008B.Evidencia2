@@ -1642,7 +1642,7 @@ Light:
   m_Type: 1
   m_Shape: 0
   m_Color: {r: 1, g: 0.95686275, b: 0.8392157, a: 1}
-  m_Intensity: 1
+  m_Intensity: 0.45
   m_Range: 10
   m_SpotAngle: 30
   m_InnerSpotAngle: 21.80208
@@ -1943,7 +1943,7 @@ Transform:
   m_GameObject: {fileID: 807448901}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 10, y: 8, z: 10}
+  m_LocalPosition: {x: 14, y: 8, z: 10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -2511,7 +2511,7 @@ Transform:
   m_GameObject: {fileID: 985617366}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
-  m_LocalPosition: {x: 10, y: 8, z: -10}
+  m_LocalPosition: {x: 14, y: 8, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -5312,6 +5312,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   over: {fileID: 0}
+  _Alarm:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 926891005}
+        m_TargetAssemblyTypeName: Drone, Assembly-CSharp
+        m_MethodName: halt
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1001 &1418563146677004071
 PrefabInstance:
   m_ObjectHideFlags: 0

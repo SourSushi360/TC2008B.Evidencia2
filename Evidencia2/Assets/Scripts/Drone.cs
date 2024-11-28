@@ -53,6 +53,9 @@ public class Drone : MonoBehaviour
         if(Input.GetKeyDown(KeyCode.E)){
             StartCoroutine(flyToGate(2));
         }
+        if(Input.GetKeyDown(KeyCode.H)){
+            halt();
+        }
     }
 
     void FixedUpdate() {
@@ -62,6 +65,18 @@ public class Drone : MonoBehaviour
             Vector3 newDirection = Vector3.RotateTowards(transform.forward, targetDirection, step, 0.0f);
             transform.rotation = Quaternion.LookRotation(newDirection);
         }
+    }
+
+    public void halt(){
+        if(target != routeCheckpoints[0].position){
+            StartCoroutine(waitForCenter());
+        } 
+    }
+
+    IEnumerator waitForCenter(){
+        yield return new WaitForSeconds(0.3f);
+        move = false;
+        StopAllCoroutines();
     }
 
     public void takeOff(){
@@ -136,7 +151,7 @@ public class Drone : MonoBehaviour
     }
 
     public void eliminateTarget(){
-        Debug.Log("Boom!");
+        //Debug.Log("Boom!");
         gun.Boom();
     }
 

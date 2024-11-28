@@ -11,6 +11,7 @@ public class Guard : MonoBehaviour
     int activeCharacterCounter = 0;
     int totalCharacters = 0;
     int humanCharacters = 0;
+    bool onAlarm = false;
     public static Guard Instance {
         get;
         private set;
@@ -39,11 +40,20 @@ public class Guard : MonoBehaviour
             destroyTarget();
         }
     }
+    public void DroneAlarm(){
+        onAlarm = true;
+    }
+
+    public void CameraAlarm(int id){
+        onAlarm = true;
+    }
 
     void destroyTarget(){
         Drone.Instance.eliminateTarget();
+        activeCharacterCounter--;
     }
 
+    
     IEnumerator createCharacters(){
         while(true){
             if(activeCharacterCounter < 12){
@@ -55,9 +65,11 @@ public class Guard : MonoBehaviour
     }
 
     IEnumerator handleGates(){
-        _OpenGates.Invoke();
-        yield return new WaitForSeconds(5);
-        _CloseGates.Invoke();
+        if(!onAlarm){
+            _OpenGates.Invoke();
+            yield return new WaitForSeconds(5);
+            _CloseGates.Invoke();
+        }
     }
 
     public void updateCounter(int type){
