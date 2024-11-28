@@ -6,6 +6,8 @@ using UnityEngine.Events;
 public class Guard : MonoBehaviour
 {
     [SerializeField] private UnityEvent _SpawnCharacters;
+    [SerializeField] private UnityEvent _OpenGates;
+    [SerializeField] private UnityEvent _CloseGates;
     public static Guard Instance {
         get;
         private set;

@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 5917050499793297856}
   - component: {fileID: 6259680258706658450}
   - component: {fileID: 529369530361109677}
+  - component: {fileID: 865228924501345586}
   m_Layer: 0
   m_Name: Gate
   m_TagString: Gate
@@ -133,3 +134,15 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!114 &865228924501345586
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4770324407788979347}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3fa894f394b9a5b46915b554bf818a8b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
